@@ -8,7 +8,7 @@
 <small>ongoing release</small>
 
 * **Rewritten Table Editor**  
-Completely revamped the Table Editor to better support larger tables and quicker editing support. Editing uses the current theme as view, there's an optional previewer, support for sorting and alignment, and much more.
+Completely revamped the Table Editor to better support larger tables and quicker editing support. Editing now uses the current theme as view, there's an optional previewer, support for sorting and alignment, improved output and parsing support and much more.
 
 * **Preview Sync Improvements**  
 Refactored some of the logistics in Preview Sync which should improve responsiveness of preview refreshes. There should now be fewer odd instances where preview is not refreshing automatically. Also updated  `Left-ctrl` which forces an immediate refresh, spellcheck and stats update.  
