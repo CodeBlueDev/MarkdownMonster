@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-
+using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Threading;
 using FontAwesome.WPF;
@@ -63,7 +64,10 @@ namespace WebViewPreviewerAddin
             Window = Model.Window;
 
             // externalize so we can use async in the method
-            _ = InitializeAsync();
+            Window.Dispatcher.Invoke(()=>
+            {
+                _ = InitializeAsync();
+            });
         }
 
         async Task InitializeAsync()
@@ -77,6 +81,7 @@ namespace WebViewPreviewerAddin
             await WebBrowser.EnsureCoreWebView2Async(env);
 
             WebBrowser.NavigationCompleted += WebBrowser_NavigationCompleted;
+            WebBrowser.KeyDown += WebBrowser_KeyDown;
 
             if (Model.Configuration.System.ShowDeveloperToolsOnStartup)
                 WebBrowser.CoreWebView2.OpenDevToolsWindow();
@@ -87,6 +92,16 @@ namespace WebViewPreviewerAddin
             WebBrowser.CoreWebView2.AddHostObjectToScript("mm", DotnetInterop);
         }
 
+
+        private void WebBrowser_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            // Handle Alt-Key forward to form so menus work
+            if (e.Key == System.Windows.Input.Key.LeftAlt)
+            {
+                mmApp.Model.Window.Focus();
+                new Thread(() => SendKeys.SendWait("%")).Start();
+            }
+        }
 
         private async void WebBrowser_NavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs e)
         {
@@ -277,7 +292,7 @@ namespace WebViewPreviewerAddin
             string renderedHtml = null, int editorLineNumber = -1)
         {
             if (!mmApp.Configuration.IsPreviewVisible)
-                return;
+                return;            //if (!mmApp.Configuration.IsPreviewVisible)
 
             var current = DateTime.UtcNow;
 
