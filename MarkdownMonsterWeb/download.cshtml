@@ -44,8 +44,8 @@
         </span>      
         <div id="TopMenu" class="right">
             <a href="./">Home</a>            
-            <a href="download.aspx" class="active">Download</a>
-            <a href="purchase.aspx" title="Purchase Markdown Monster">Buy</a>
+            <a href="download" class="active">Download</a>
+            <a href="purchase" title="Purchase Markdown Monster">Buy</a>
             <a href="docs/" class="hidable" title="Documentation">Docs</a>
             <a href="https://medium.com/markdown-monster-blog/" title="Markdown Monster Weblog">                
                 Blog
@@ -84,13 +84,13 @@
                        </dl> 
                              
                         <p style="margin-top: 35px;">
-                            <a href="purchase.aspx#License" class="btn btn-primary" style="width: 210px">
+                            <a href="purchase#License" class="btn btn-primary" style="width: 210px">
                                 <i class="fa fa-info-circle" style="color: #ddd"></i>&nbsp;
                                 License Information
                             </a>
                         </p>
                         <p id="License" >
-                            <a id="Licensing" href="purchase.aspx" class="btn btn-primary" style="width: 210px">
+                            <a id="Licensing" href="purchase" class="btn btn-primary" style="width: 210px">
                                 <i class="fa fa-check" style="color: lightgreen"></i>&nbsp;
                                 Buy Markdown Monster
                             </a>
@@ -141,12 +141,12 @@ user folder.">Portable Zip</a> |
                                 <div class="small">  
                                     <p>
                                     Markdown Monster can be downloaded and evaluated for free, but a 
-                                    <a href="purchase.aspx">reasonably priced license</a>
-                                    must be purchased for continued use. <a href="purchase.aspx#License">Licenses</a> are per-user, so you can use 
+                                    <a href="purchase">reasonably priced license</a>
+                                    must be purchased for continued use. <a href="purchase#License">Licenses</a> are per-user, so you can use 
                                     Markdown Monster on as many computers you wish with your license.
                                     </p>
                                     <p>
-                                    Want a <a href="purchase.aspx#Contribute">free license</a>? Contributors who help out with code, feature suggestions, 
+                                    Want a <a href="purchase#Contribute">free license</a>? Contributors who help out with code, feature suggestions, 
                                     documentation or promotion qualify for a free license.
                                     </p>
                                     <p>
@@ -179,7 +179,7 @@ c:\> choco install markdownmonster
 <span class="comment-line"># upgrade to the latest version</span>
 c:\> choco upgrade markdownmonster
 
-<span class="comment-line"># install using the portable, non-admin installer</span>
+<span class="comment-line"># portable, non-admin installer</span>
 c:\> choco install markdownmonster.portable
 </code></pre>                                                                                                                    
                                 </p>
@@ -252,7 +252,7 @@ c:\> choco install markdownmonster.portable
             
 
         </div>
-        &copy; West Wind Technologies, 2015-<%= DateTime.Now.Year %>
+        &copy; West Wind Technologies, 2015-@DateTime.Now.Year
     </nav> 
    </div>
 
@@ -309,14 +309,14 @@ c:\> choco install markdownmonster.portable
                 MatchCollection matches = regex.Matches(xml);
                 if (matches != null && matches.Count > 0)
                 {
-                    _version = matches[1].Value;
+                    _version = matches[0].Groups[1].Value;
                 }
 
                 regex = new Regex(@"<ReleaseDate>(.*)<\/ReleaseDate>");
                 matches = regex.Matches(xml);
                 if (matches != null && matches.Count > 0)
                 {
-                    ReleaseDate = matches[1].Value;
+                    ReleaseDate = matches[0].Groups[1].Value;
                 }
                 _lastAccess = DateTime.UtcNow;
             }
