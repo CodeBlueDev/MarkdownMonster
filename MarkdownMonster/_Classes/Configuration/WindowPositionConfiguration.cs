@@ -22,7 +22,18 @@ namespace MarkdownMonster
         public int PreviewTop { get; set; }
         public int PreviewLeft { get; set; }
         public int PreviewHeight { get; set; } = 700;
-        public int PreviewWidth { get; set; } = 500;
+
+        public int PreviewWidth
+        {
+            get
+            {
+                return _previewWidth;
+            }
+            set
+            {
+                _previewWidth = value;
+            }
+        }
 
 
         public PreviewWindowDisplayModes PreviewDisplayMode
@@ -112,7 +123,8 @@ namespace MarkdownMonster
         }
 
         private bool _IsTabHeaderPanelVisible = true;
-        
+        private int _previewWidth = 500;
+
 
         /// <summary>
         /// Hold last window state.

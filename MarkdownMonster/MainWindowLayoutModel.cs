@@ -174,10 +174,10 @@ namespace MarkdownMonster.Windows {
 
                 if (value == false)
                 {
-                    if (PreviewWidth.IsAbsolute) 
-                        mmApp.Configuration.WindowPosition.PreviewWidth = Convert.ToInt32(PreviewWidth.Value);                
+                    if (PreviewWidth.IsAbsolute && PreviewWidth.Value > 0) // preserve external preview size
+                        Model.Configuration.WindowPosition.PreviewWidth = Convert.ToInt32(PreviewWidth.Value);
                     PreviewWidth = GridLengthHelper.Zero;
-                    PreviewSeparatorWidth = GridLengthHelper.Zero;                    
+                    PreviewSeparatorWidth = GridLengthHelper.Zero;
                 }
                 else
                 {

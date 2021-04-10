@@ -89,14 +89,7 @@ namespace MarkdownMonster.Windows
             IsClosed = true;
 
 
-            // explicitly closed with close button - turn preview 
-            bool wasCodeClosed = new StackTrace().GetFrames().FirstOrDefault(x => x.GetMethod() == typeof(Window).GetMethod("Close")) != null;
-            if (!wasCodeClosed)
-            {
-                mmApp.Model.IsPreviewBrowserVisible = false;
-            }
 
-            
             var config = mmApp.Model.Configuration.WindowPosition;
 
             config.PreviewLeft = Convert.ToInt32(Left);
@@ -104,10 +97,17 @@ namespace MarkdownMonster.Windows
             config.PreviewWidth = Convert.ToInt32(Width);
             config.PreviewHeight = Convert.ToInt32(Height);
 
-            AttachDockingBehavior(true);
 
+            // explicitly closed with close button - turn preview 
+            bool wasCodeClosed = new StackTrace().GetFrames().FirstOrDefault(x => x.GetMethod() == typeof(Window).GetMethod("Close")) != null;
+            if (!wasCodeClosed)
+            {
+                mmApp.Model.IsPreviewBrowserVisible = false;
+            }
 
-            //Model.Window.PreviewBrowser = PreviewBrowser;            
+     
+            //AttachDockingBehavior(true);
+
             PreviewBrowserContainer.Children.Clear();
             PreviewBrowser = null;
             Model.Window.PreviewBrowser = null;
