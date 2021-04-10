@@ -77,7 +77,7 @@ namespace MarkdownMonster.Windows
         /// <summary>
         /// Dispatcher.Delay Extension method that delay executes 
         /// an action. This version awaits both the delay and the
-        /// synchonized action
+        /// synchronized action
         /// </summary>        
         /// <param name="disp">The Dispatcher instance</param>
         /// <param name="delayMs">milliseconds to delay before executing</param>
@@ -94,7 +94,7 @@ namespace MarkdownMonster.Windows
             await disp.BeginInvoke(action, priority, parm);
         }
 
-        // <summary>
+        /// <summary>
         /// Dispatcher.Delay Extension method that delay executes 
         /// an action. This version awaits both the delay and the
         /// synchonized action

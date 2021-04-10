@@ -2217,13 +2217,18 @@ namespace MarkdownMonster
         /// <param name="hide"></param>
         public void ShowPreviewBrowser(bool hide = false, bool refresh = false)
         {
+            var origPreviewVisible = Model.WindowLayout.IsPreviewVisible;
+
             if (!hide && Model.Configuration.PreviewMode != PreviewModes.None)
             {
                 if (Model.Configuration.PreviewMode == PreviewModes.InternalPreview)
                 {
+                    var origVisible = Model.Configuration.IsPreviewVisible;
 
                     if (Model.Configuration.IsPreviewVisible)
+                    {
                         Model.WindowLayout.IsPreviewVisible = true;
+                    }
                     else
                     {
                         Model.WindowLayout.IsPreviewVisible = false;
@@ -2242,6 +2247,8 @@ namespace MarkdownMonster
                     {
                         PreviewBrowserWindow?.Close();
 
+                        Model.Window.Width += PreviewBrowserWindow.Width - 10;
+                        
                         _previewBrowserWindow = null;
                         LoadPreviewBrowser();
                         return;
@@ -2265,8 +2272,10 @@ namespace MarkdownMonster
                         PreviewBrowser?.PreviewMarkdownAsync();
                     }
 
-
                     Model.WindowLayout.IsPreviewVisible = false;
+
+                    if (origPreviewVisible)
+                        Model.Window.Width -= Model.Configuration.WindowPosition.PreviewWidth - 10;
 
                     // clear the preview
                     ((IPreviewBrowser) PreviewBrowserContainer.Children[0]).Navigate("about:blank");
