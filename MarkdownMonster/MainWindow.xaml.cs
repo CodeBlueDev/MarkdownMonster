@@ -112,7 +112,7 @@ namespace MarkdownMonster
             set { _previewBrowserWindow = value; }
             get
             {
-                if (_previewBrowserWindow == null || _previewBrowserWindow.IsClosed)
+                if (Model.Configuration.IsPreviewVisible && (_previewBrowserWindow == null || _previewBrowserWindow.IsClosed))
                 {
                     _previewBrowserWindow = new PreviewBrowserWindow();
                     if (Model.Configuration.WindowPosition.PreviewDisplayMode ==
@@ -2241,6 +2241,7 @@ namespace MarkdownMonster
                     if (_previewBrowserWindow != null && PreviewBrowserWindow.Visibility == Visibility.Visible)
                     {
                         PreviewBrowserWindow?.Close();
+
                         _previewBrowserWindow = null;
                         LoadPreviewBrowser();
                         return;
@@ -2359,7 +2360,6 @@ namespace MarkdownMonster
 
                 if (PreviewBrowserContainer == null)
                     PreviewBrowserContainer = new Grid();
-
 
                 PreviewBrowserContainer.Children.Clear();
                 PreviewBrowserContainer.Children.Add(PreviewBrowser as UIElement);
@@ -3013,6 +3013,7 @@ Do you want to continue anyway?", "Disable Markdown Script Rendering",
         {
             mmApp.Model.WindowLayout.FixUpEditorSize();
         }
+
     }
 
     public class RecentDocumentListItem

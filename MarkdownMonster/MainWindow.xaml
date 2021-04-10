@@ -30,7 +30,7 @@
         MinWidth="820" MinHeight="500" 
         WindowTransitionsEnabled="False"
         SizeChanged="MainApplicationWindow_SizeChanged"
-        >
+>
     <Window.Resources>
         <localwindows:InvertedBooleanConverter x:Key="InvertedBooleanConverter" />
         <localwindows:NotEmptyStringToBooleanConverter x:Key="NotEmptyStringToBooleanConverter" />

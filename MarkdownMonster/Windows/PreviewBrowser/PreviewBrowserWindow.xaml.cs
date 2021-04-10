@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -33,10 +35,7 @@ namespace MarkdownMonster.Windows
             mmApp.SetThemeWindowOverride(this);
 
             Model = mmApp.Model;
-            DataContext = Model;        
-            
-            LoadInternalPreviewBrowser();
-            SetWindowPositionFromConfig();
+            DataContext = Model;
 
             WindowDisplayModes = new List<KeyValuePair<string, string>>();
             WindowDisplayModes.Add(
@@ -48,6 +47,8 @@ namespace MarkdownMonster.Windows
 
             ComboWindowDisplayModes.ItemsSource = WindowDisplayModes;
             ComboWindowDisplayModes.BorderBrush = Brushes.Silver;
+
+            LoadInternalPreviewBrowser();
         }
 
         void LoadInternalPreviewBrowser()
@@ -58,9 +59,11 @@ namespace MarkdownMonster.Windows
 
             // if not we use the default 
             if (PreviewBrowser == null)
-                PreviewBrowser = new IEWebBrowserControl() { Name = "PreviewBrowser" };
+                PreviewBrowser = new IEWebBrowserControl() {Name = "PreviewBrowser"};
 
-            PreviewBrowserContainer.Children.Add(PreviewBrowser as UIElement);            
+            PreviewBrowserContainer.Children.Add(PreviewBrowser as UIElement);
+
+            Dispatcher.InvokeAsync(SetWindowPositionFromConfig);
         }
 
 
@@ -73,19 +76,27 @@ namespace MarkdownMonster.Windows
             Width = config.PreviewWidth;
             Height = config.PreviewHeight;
 
+            FixMonitorPosition();
+
             Topmost = config.PreviewDisplayMode == PreviewWindowDisplayModes.AlwaysOnTop;
             if (config.PreviewDocked)
-                AttachDockingBehavior();
-
-            FixMonitorPosition();
+                Dispatcher.InvokeAsync(() => AttachDockingBehavior(),
+                    System.Windows.Threading.DispatcherPriority.ApplicationIdle);
         }
 
         protected override void OnClosing(CancelEventArgs e)
         {            
             IsClosed = true;
 
-            mmApp.Model.IsPreviewBrowserVisible = false;
 
+            // explicitly closed with close button - turn preview 
+            bool wasCodeClosed = new StackTrace().GetFrames().FirstOrDefault(x => x.GetMethod() == typeof(Window).GetMethod("Close")) != null;
+            if (!wasCodeClosed)
+            {
+                mmApp.Model.IsPreviewBrowserVisible = false;
+            }
+
+            
             var config = mmApp.Model.Configuration.WindowPosition;
 
             config.PreviewLeft = Convert.ToInt32(Left);

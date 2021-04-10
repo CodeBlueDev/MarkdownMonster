@@ -1122,17 +1122,8 @@ namespace MarkdownMonster
 
                 if (action == "ExternalPreviewWindow")
                 {
-                    if (Model.Window.PreviewBrowser is IEWebBrowserControl)
-                    {
-                        Model.Configuration.PreviewMode = MarkdownMonster.PreviewModes.ExternalPreviewWindow;
-                        Model.IsExternalPreview = true;
-                    }
-                    else
-                    {
-                        Model.IsExternalPreview = false;
-                        Model.Configuration.PreviewMode = MarkdownMonster.PreviewModes.InternalPreview;
-                        Model.Window.ShowStatusError("External preview is available only with the default IE previewer. Switch to default preview mode.");
-                    }
+                    Model.Configuration.PreviewMode = MarkdownMonster.PreviewModes.ExternalPreviewWindow;
+                    Model.IsExternalPreview = true;
                 }
                 else
                 {
@@ -1141,7 +1132,6 @@ namespace MarkdownMonster
                 }
 
                 Model.IsPreviewBrowserVisible = true;
-
                 Model.Window.ShowPreviewBrowser();
                 Model.Window.PreviewMarkdownAsync();
             });

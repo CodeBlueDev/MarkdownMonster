@@ -166,7 +166,8 @@ namespace MarkdownMonster.Windows {
             get => _isPreviewVisible;
             set
             {
-                //if (value == _isPreviewVisible) return;
+                if (Model.IsExternalPreview)
+                    value = false;
 
                 _isPreviewVisible = value;
                 OnPropertyChanged();

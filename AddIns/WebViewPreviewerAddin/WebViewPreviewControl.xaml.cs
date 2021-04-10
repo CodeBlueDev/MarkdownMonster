@@ -1,9 +1,13 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Controls;
+using System.Windows.Forms;
 using MarkdownMonster;
 using MarkdownMonster.Windows.PreviewBrowser;
+using UserControl = System.Windows.Controls.UserControl;
 
 namespace WebViewPreviewerAddin
 {
@@ -12,13 +16,10 @@ namespace WebViewPreviewerAddin
     /// </summary>
     public partial class WebViewPreviewControl : UserControl, IPreviewBrowser
     {
-        
-        public bool firstload = true;
 
         public WebViewPreviewControl()
         {
             InitializeComponent();
-
 
             Model = mmApp.Model;
             Window = Model.Window;
@@ -26,9 +27,11 @@ namespace WebViewPreviewerAddin
             DataContext = Model;
 
             PreviewBrowser = new WebViewPreviewHandler(WebBrowser);
+
         }
 
-        
+
+
 
         public AppModel Model { get; set; }
 
