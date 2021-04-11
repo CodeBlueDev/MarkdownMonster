@@ -98,8 +98,8 @@ namespace WebViewPreviewerAddin
             // Handle Alt-Key forward to form so menus work
             if (e.Key == System.Windows.Input.Key.LeftAlt)
             {
-                mmApp.Model.Window.Focus();
-                new Thread(() => SendKeys.SendWait("%")).Start();
+                // important: We have to activate from the non-current thread or SendKeys won't work
+                ThreadPool.QueueUserWorkItem((p) => SendKeys.SendWait("%"), null);
             }
         }
 

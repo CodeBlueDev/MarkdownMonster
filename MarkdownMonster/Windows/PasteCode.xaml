@@ -18,7 +18,8 @@
         WindowStartupLocation="CenterOwner"         
         IsMinButtonEnabled="False" IsMaxRestoreButtonEnabled="False"                       
         Width="800" Height="600" MinWidth="500" MinHeight="500"
-        WindowTransitionsEnabled="False">
+        WindowTransitionsEnabled="False"
+        >
     <Window.InputBindings>
         <KeyBinding Key="F1" Command="{Binding AppModel.Commands.HelpCommand}" CommandParameter="_53e0pnhea.htm"/>
     </Window.InputBindings>
