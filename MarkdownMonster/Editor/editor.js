@@ -108,6 +108,125 @@
             return editor;
         },
 
+        setlanguage: function (lang) {
+
+          if (!lang)
+            lang = "txt";
+          if (lang == "vfp")
+            lang = "foxpro";
+          if (lang == "c#")
+            lang = "csharp";
+          if (lang == "c++" || lang == "cpp")
+            lang = "c_cpp";
+          if (lang == "txt" || lang == "text" || lang == "none" || lang == "plain")
+            lang = "text";
+
+          te.editor.getSession().setMode("ace/mode/" + lang);
+
+          //if (false) // te.lastStyle.noAutoComplete) { // style.noAutoComplete) {
+          //{
+          //  setTimeout(function() {
+          //    var mode = te.editor.getSession().getMode();    
+                    
+          //    // disable auto-quote injection
+          //    if (mode.$quotes){
+          //      mode.$quotes = {};
+          //    }                    
+          //  },80);                            
+          //}
+        },
+
+        lastStyle: null,
+        // This function configures the editor based on JSON or object map with 'editorSettings'
+        // properties that configure the editor.
+        setEditorStyle: function (styleJson, editor) {          
+            if (!editor)
+                editor = te.editor;
+
+            //setTimeout(function () {
+            var style;
+            if (typeof styleJson === "object")
+                style = styleJson;
+            else
+                style = JSON.parse(styleJson);
+
+            te.settings = style;
+            te.lastStyle = style;
+
+            editor.container.style.lineHeight = style.lineHeight;
+
+            var activeTheme = editor.getTheme();
+            var theme = "ace/theme/" + style.theme;
+            if (activeTheme !== theme)
+                editor.setTheme(theme);
+
+            editor.setOptions({
+                fontFamily: style.font,
+                fontSize: style.fontSize
+            });
+            te.setRightToLeft(style.rightToLeft);
+
+            var session = editor.getSession();
+
+            session.setUseWrapMode(style.wrapText);
+            session.setOption("indentedSoftWrap", true);
+          
+
+            session.setOptions({ useSoftTabs: style.useSoftTabs, tabSize: style.tabSize });
+            // Disable Soft-Tab auto skip with arrow keys
+            editor.selection.wouldMoveIntoSoftTab = te.returnFalse;
+          
+            session.setNewLineMode(style.linefeedMode);
+
+            editor.setHighlightActiveLine(style.highlightActiveLine);
+
+            editor.renderer.setShowGutter(style.showLineNumbers);
+            editor.renderer.setShowInvisibles(style.showInvisibles);
+
+            // these value are used in Resize to keep the editor size
+            // limited to a max-width
+            te.adjustPadding(true);
+
+            if (style.showPrintMargin) {
+                te.editor.setShowPrintMargin(true);
+                te.editor.setPrintMarginColumn(style.printMargin + 1);
+            } else {
+                te.editor.setShowPrintMargin(false);
+                te.editor.setPrintMarginColumn(style.printMargin + 1);
+            }
+
+            if (style.wrapMargin > 0)
+                te.editor.session.setWrapLimitRange(style.wrapMarin, style.wrapMargin);
+            else
+                te.editor.session.setWrapLimitRange(null, null);
+
+            //style.wrapMargin = 50;
+            //if (style.wrapMargin > 0) {
+            //
+            //    te.editor.setShowPrintMargin(true);
+            //    te.editor.setPrintMarginColumn(style.wrapMargin + 1);
+            //} else {
+            //    session.setWrapLimitRange(null, null);
+            //    te.editor.setShowPrintMargin(false);
+            //}
+
+            var keyboardHandler = style.keyboardHandler;
+            if (!keyboardHandler || keyboardHandler == "default" || keyboardHandler == "ace")
+                te.editor.setKeyboardHandler("");
+            else
+                te.editor.setKeyboardHandler("ace/keyboard/" + keyboardHandler);
+
+            if (!style.enableBulletAutoCompletion) {
+                // turn off bullet auto-completion (or any new line auto-completion)
+                session.getMode().getNextLineIndent = function (state, line) {
+                    return this.$getIndent(line);
+                };
+            }
+ 
+
+            //},1);
+            setTimeout(te.updateDocumentStats, 30);
+        },
 
         // one time event hook ups
         configureEvents: function() {
@@ -317,100 +436,6 @@
             };            
         },
 
-
-        lastStyle: null,
-        // This function configures the editor based on JSON or object map with 'editorSettings'
-        // properties that configure the editor.
-        setEditorStyle: function (styleJson, editor) {
-
-            if (!editor)
-                editor = te.editor;
-
-            //setTimeout(function () {
-            var style;
-            if (typeof styleJson === "object")
-                style = styleJson;
-            else
-                style = JSON.parse(styleJson);
-
-            te.settings = style;
-            te.lastStyle = style;
-
-            editor.container.style.lineHeight = style.lineHeight;
-
-            var activeTheme = editor.getTheme();
-            var theme = "ace/theme/" + style.theme;
-            if (activeTheme !== theme)
-                editor.setTheme(theme);
-
-            editor.setOptions({
-                fontFamily: style.font,
-                fontSize: style.fontSize
-            });
-            te.setRightToLeft(style.rightToLeft);
-
-            var session = editor.getSession();
-
-            session.setUseWrapMode(style.wrapText);
-            session.setOption("indentedSoftWrap", true);
-          
-
-            session.setOptions({ useSoftTabs: style.useSoftTabs, tabSize: style.tabSize });
-            // Disable Soft-Tab auto skip with arrow keys
-            editor.selection.wouldMoveIntoSoftTab = te.returnFalse;
-          
-            session.setNewLineMode(style.linefeedMode);
-
-            editor.setHighlightActiveLine(style.highlightActiveLine);
-
-            editor.renderer.setShowGutter(style.showLineNumbers);
-            editor.renderer.setShowInvisibles(style.showInvisibles);
-
-            // these value are used in Resize to keep the editor size
-            // limited to a max-width
-            te.adjustPadding(true);
-
-            if (style.showPrintMargin) {
-                te.editor.setShowPrintMargin(true);
-                te.editor.setPrintMarginColumn(style.printMargin + 1);
-            } else {
-                te.editor.setShowPrintMargin(false);
-                te.editor.setPrintMarginColumn(style.printMargin + 1);
-            }
-
-            if (style.wrapMargin > 0)
-                te.editor.session.setWrapLimitRange(style.wrapMarin, style.wrapMargin);
-            else
-                te.editor.session.setWrapLimitRange(null, null);
-
-            //style.wrapMargin = 50;
-            //if (style.wrapMargin > 0) {
-            //
-            //    te.editor.setShowPrintMargin(true);
-            //    te.editor.setPrintMarginColumn(style.wrapMargin + 1);
-            //} else {
-            //    session.setWrapLimitRange(null, null);
-            //    te.editor.setShowPrintMargin(false);
-            //}
-
-            var keyboardHandler = style.keyboardHandler;
-            if (!keyboardHandler || keyboardHandler == "default" || keyboardHandler == "ace")
-                te.editor.setKeyboardHandler("");
-            else
-                te.editor.setKeyboardHandler("ace/keyboard/" + keyboardHandler);
-
-            if (!style.enableBulletAutoCompletion) {
-                // turn off bullet auto-completion (or any new line auto-completion)
-                editor.getSession().getMode().getNextLineIndent = function (state, line) {
-                    return this.$getIndent(line);
-                };
-
-            }
-            //},1);
-
-
-            setTimeout(te.updateDocumentStats, 30);
-        },
         setShowLineNumbers: function (showLineNumbers) {
             te.editor.renderer.setShowGutter(showLineNumbers);
         },
@@ -420,21 +445,7 @@
         setWordWrap: function (enable) {
             te.editor.session.setUseWrapMode(enable);
         },
-        setlanguage: function (lang) {
 
-            if (!lang)
-                lang = "txt";
-            if (lang == "vfp")
-                lang = "foxpro";
-            if (lang == "c#")
-                lang = "csharp";
-            if (lang == "c++" || lang == "cpp")
-                lang = "c_cpp";
-            if (lang == "txt" || lang == "text" || lang == "none" || lang == "plain")
-                lang = "text";
-
-            te.editor.getSession().setMode("ace/mode/" + lang);
-        },
         setRightToLeft: function (onOff) {
           te.editor.setOption("rtlText",onOff);
           //te.editor.session.$bidiHandler.setRtlDirection(te.editor,onOff);
