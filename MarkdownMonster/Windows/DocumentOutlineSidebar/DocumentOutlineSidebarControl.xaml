@@ -42,7 +42,7 @@
                      Command="{Binding Commands.CloseLeftSidebarPanelCommand}" />
         </Grid>
 
-        <ListBox Grid.Row="1" Name="ListOutline"                  
+        <ListBox Grid.Row="1" Name="ListOutline" x:FieldModifier="public"          
                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"                             
                              ItemsSource="{Binding DocumentOutline}"  
                               Focusable="False" Margin="5"

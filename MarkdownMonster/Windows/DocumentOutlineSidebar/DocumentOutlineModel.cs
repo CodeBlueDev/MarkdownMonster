@@ -35,8 +35,14 @@ namespace MarkdownMonster.Windows.DocumentOutlineSidebar
         public MainWindow Window { get; set; }
 
 
+        /// <summary>
+        /// The actively selected item that was last selected
+        /// </summary>
+        public HeaderItem LastSelectedItem { get; set; }
 
-
+        /// <summary>
+        /// Collection of the header items displayed
+        /// </summary>
         public ObservableCollection<HeaderItem> DocumentOutline
         {
             get { return _DocumentOutline; }
@@ -320,6 +326,7 @@ namespace MarkdownMonster.Windows.DocumentOutlineSidebar
     }
 
 
+    [DebuggerDisplay("{Level} - {Text}")]
     public class HeaderItem
     {
         public string Text { get; set; }

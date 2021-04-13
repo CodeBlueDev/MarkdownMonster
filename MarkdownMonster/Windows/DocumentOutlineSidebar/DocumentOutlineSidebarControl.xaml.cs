@@ -111,6 +111,7 @@ namespace MarkdownMonster.Windows
                     ListOutline.SelectedItem = selectedItem;
 
                 ListOutline.ScrollIntoView(selectedItem);
+                Model.LastSelectedItem = selectedItem;
             }
         }
 
@@ -169,6 +170,8 @@ namespace MarkdownMonster.Windows
             var selected = ListOutline.SelectedItem as HeaderItem;
             if (selected == null || Model.AppModel.ActiveEditor == null)
                 return;
+
+            Model.LastSelectedItem = selected;
 
             IgnoreSelection = DateTime.UtcNow;  // prevent editor navigating outline again
             Model.AppModel.ActiveEditor.GotoLine(selected.Line -1, noRefresh: false);  // refresh the preview

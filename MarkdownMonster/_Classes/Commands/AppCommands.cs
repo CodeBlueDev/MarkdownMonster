@@ -17,6 +17,7 @@ using MarkdownMonster.Services;
 using MarkdownMonster.Utilities;
 using MarkdownMonster.Windows;
 using MarkdownMonster.Windows.ConfigurationEditor;
+using MarkdownMonster.Windows.DocumentOutlineSidebar;
 using MarkdownMonster.Windows.PreviewBrowser;
 using Microsoft.Win32;
 
@@ -2150,6 +2151,38 @@ namespace MarkdownMonster
                     Model.Configuration.IsDocumentOutlineVisible = true;
                     Model.WindowLayout.IsLeftSidebarVisible = true;
                     Model.Window.SidebarContainer.SelectedItem = Model.Window.TabDocumentOutline;
+
+                    Model.Window.Dispatcher.InvokeAsync( () =>
+                    {
+                        var list = Model.Window.DocumentOutline.ListOutline;
+                        var item = list.SelectedItem as HeaderItem;
+                        if (item == null)
+                            item = Model.Window.DocumentOutline.Model.LastSelectedItem;
+                        if (item == null && list.Items.Count > 0)
+                            item = list.Items[0] as HeaderItem;
+                        if (item == null)
+                            list.Focus();
+                        else
+                        {
+                            // items 
+                            HeaderItem selectedItem = null;
+                            foreach (var litem in list.Items)
+                            {
+                                selectedItem = litem as HeaderItem;
+                                if (selectedItem.Text == item.Text && item.Level == selectedItem.Level)
+                                    break;
+                            }
+                            if (selectedItem == null)
+                                return;
+
+                            var titem = list
+                                .ItemContainerGenerator
+                                .ContainerFromItem(selectedItem);
+                            var lvItem = titem as ListBoxItem;
+                            lvItem?.Focus();
+                        }
+
+                    }, DispatcherPriority.ApplicationIdle);
                 }
                 else if (action == "FolderBrowser")
                 {
