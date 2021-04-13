@@ -221,10 +221,14 @@ namespace MarkdownMonster
             {
                 WebBrowser.LoadCompleted += OnDocumentCompleted;
 
+#if DEBUG
                 // TODO: Local Debugging URL for Editor Resources
-                WebBrowser.Navigate(new Uri( @"c:\projects\MarkdownMonster\MarkdownMonster\Editor\editor.htm"));
-                // WebBrowser.Navigate(new Uri(Path.Combine(App.InitialStartDirectory, "Editor\\editor.htm")));
+                // WebBrowser.Navigate(new Uri( @"c:\projects\MarkdownMonster\MarkdownMonster\Editor\editor.htm"));
+                WebBrowser.Navigate(new Uri(Path.Combine(App.InitialStartDirectory, "Editor\\editor.htm")));
                 //WebBrowser.Navigate("http://localhost:8080/editor.htm");  // live reload server
+#else
+                WebBrowser.Navigate(new Uri(Path.Combine(App.InitialStartDirectory, "Editor\\editor.htm")));
+#endif
             }
             else if (forceReload)
                 WebBrowser.Navigate(new Uri(Path.Combine(App.InitialStartDirectory, "Editor\\editor.htm")));
@@ -351,9 +355,9 @@ namespace MarkdownMonster
             }
         }
 
-        #endregion
+#endregion
 
-        #region Markdown Access and Manipulation
+#region Markdown Access and Manipulation
 
         /// <summary>
         /// Sets the markdown text into the editor control
@@ -587,12 +591,12 @@ You can compare files using a Diff tool to compare and merge changes.
             }
             return true;  // run save()
         }
-        #endregion
+#endregion
 
 
 
 
-        #region Editor Selection Replacements and Insertions
+#region Editor Selection Replacements and Insertions
 
         public struct MarkupMarkdownResult
         {
@@ -1201,10 +1205,10 @@ You can compare files using a Diff tool to compare and merge changes.
             AceEditor?.Invoke("execcommand", action, parm);
         }
 
-        #endregion
+#endregion
 
 
-        #region Get and Set Document Properties
+#region Get and Set Document Properties
 
         public bool IsPreviewToEditorSync()
         {
@@ -1335,9 +1339,9 @@ You can compare files using a Diff tool to compare and merge changes.
             AceEditor?.SetWordWrap(enable);
         }
 
-        #endregion
+#endregion
 
-        #region Properties Collection Helpers
+#region Properties Collection Helpers
 
 
         /// <summary>
@@ -1383,9 +1387,9 @@ You can compare files using a Diff tool to compare and merge changes.
             return defaultValue;
         }
 
-        #endregion
+#endregion
 
-        #region Selection and Line Operations
+#region Selection and Line Operations
 
         /// <summary>
         /// Replaces the editor's content without completely
@@ -1681,9 +1685,9 @@ You can compare files using a Diff tool to compare and merge changes.
             AceEditor?.Split(mode.ToString());
         }
 
-        #endregion
+#endregion
 
-        #region Editor Focus and Sizing
+#region Editor Focus and Sizing
 
         /// <summary>
         /// Focuses the Markdown editor in the Window
@@ -1715,9 +1719,9 @@ You can compare files using a Diff tool to compare and merge changes.
             // nothing to do at the moment
         }
 
-        #endregion
+#endregion
 
-        #region Callback functions from the Html Editor
+#region Callback functions from the Html Editor
 
         /// <summary>
         /// Callback handler callable from JavaScript editor
