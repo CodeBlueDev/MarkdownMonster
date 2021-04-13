@@ -1,6 +1,6 @@
 # Markdown Monster
 
-[![download](https://img.shields.io/badge/download-latest-blue.svg)](https://markdownmonster.west-wind.com/download.aspx)
+[![download](https://img.shields.io/badge/download-latest-blue.svg)](https://markdownmonster.west-wind.com/download)
 [![NuGet](https://img.shields.io/chocolatey/v/markdownmonster.svg)](https://chocolatey.org/packages/MarkdownMonster)
 [![](https://img.shields.io/chocolatey/dt/markdownmonster.svg)](https://chocolatey.org/packages/MarkdownMonster)
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg) ](https://gitter.im/MarkdownMonster/MarkdownMonster)
@@ -20,7 +20,7 @@ Markdown Monster is an easy to use and extensible **Markdown Editor**, **Viewer*
 
 You can download Markdown Monster using the self-contained installer:
 
-[Download Markdown Monster](http://markdownmonster.west-wind.com/download.aspx)
+[Download Markdown Monster](http://markdownmonster.west-wind.com/download)
 
 ### Chocolatey
 
@@ -435,7 +435,7 @@ Markdown Monster is **Source Open** and source code is available on GitHub at ht
 
 #### Help us out - Get a free License
 
-We encourage pull requests for feature suggestions or bug fixes to be submitted back to the Markdown Monster repository. Any contributors that provide meaningful enhancements, help with identifying and or fixing of bugs or by actively promoting Markdown Monster can qualify for a free license (at our discretion). Additionally Microsoft MVPs and Insiders and Microsoft Employees can [apply for a free license](https://markdownmonster.west-wind.com/download.aspx#contribute---get-a-free-license").
+We encourage pull requests for feature suggestions or bug fixes to be submitted back to the Markdown Monster repository. Any contributors that provide meaningful enhancements, help with identifying and or fixing of bugs or by actively promoting Markdown Monster can qualify for a free license (at our discretion). Additionally Microsoft MVPs and Insiders and Microsoft Employees can [apply for a free license](https://markdownmonster.west-wind.com/download#contribute---get-a-free-license").
 
 #### WARRANTY DISCLAIMER: NO WARRANTY!
 

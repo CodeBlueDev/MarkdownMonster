@@ -220,8 +220,11 @@ namespace MarkdownMonster
             if (AceEditor == null)
             {
                 WebBrowser.LoadCompleted += OnDocumentCompleted;
-                WebBrowser.Navigate(new Uri(Path.Combine(App.InitialStartDirectory, "Editor\\editor.htm")));
-                //WebBrowser.Navigate("http://localhost:8080/editor.htm");
+
+                // TODO: Local Debugging URL for Editor Resources
+                WebBrowser.Navigate(new Uri( @"c:\projects\MarkdownMonster\MarkdownMonster\Editor\editor.htm"));
+                // WebBrowser.Navigate(new Uri(Path.Combine(App.InitialStartDirectory, "Editor\\editor.htm")));
+                //WebBrowser.Navigate("http://localhost:8080/editor.htm");  // live reload server
             }
             else if (forceReload)
                 WebBrowser.Navigate(new Uri(Path.Combine(App.InitialStartDirectory, "Editor\\editor.htm")));

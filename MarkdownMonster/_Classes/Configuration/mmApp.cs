@@ -663,14 +663,14 @@ Markdown Monster v{version}
 		/// The URL where new versions are downloaded from
 		/// </summary>
 		public string InstallerDownloadUrl { get; internal set; } =
-			"https://markdownmonster.west-wind.com/download.aspx";
+			"https://markdownmonster.west-wind.com/download";
 
 
 		/// <summary>
 		/// Url to go to purchase a registered version of Markdown Monster
 		/// </summary>
 		public string RegistrationUrl { get; internal set; } =
-            "http://markdownmonster.west-wind.com/purchase.aspx";
+            "http://markdownmonster.west-wind.com/purchase";
 			//"https://store.west-wind.com/product/order/markdown_monster";
 
 

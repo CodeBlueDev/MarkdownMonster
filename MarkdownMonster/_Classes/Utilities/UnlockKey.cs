@@ -277,7 +277,7 @@ You can retry the operation to access this feature.
             var result = form.ShowDialog();
 
             if (form.ButtonResult == form.ButtonOk)
-                ShellUtils.GoUrl("https://markdownmonster.west-wind.com/purchase.aspx");
+                ShellUtils.GoUrl("https://markdownmonster.west-wind.com/purchase");
             else if (form.ButtonResult == featureButton && !string.IsNullOrEmpty(premiumFeatureLink))
                 ShellUtils.GoUrl(premiumFeatureLink);
 
